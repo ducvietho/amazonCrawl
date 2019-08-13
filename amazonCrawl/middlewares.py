@@ -4,9 +4,10 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+from builtins import object, open, classmethod
 
 from scrapy import signals
-
+import random;
 
 class AmazoncrawlSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -101,3 +102,19 @@ class AmazoncrawlDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+class ProxyMiddleware(object):
+    ROTATING_PROXY_LIST = [
+        '111.223.75.181:8888',
+        '93.179.80.174:9080',
+        '138.197.222.35:1080',
+        '178.134.123.38:9999'
+        '138.197.204.55:1080',
+        '54.39.16.26:43570',
+        '54.37.129.12:2556',
+        '14.63.76.243:1080',
+        '174.70.241.14:24392'
+    ]
+
+    def parse_request(self, request, spider):
+        request.meta['proxy'] = 'http://{}'.format(random.choice(self.ROTATING_PROXY_LIST))

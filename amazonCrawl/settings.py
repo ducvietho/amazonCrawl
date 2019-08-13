@@ -24,28 +24,34 @@ MYSQL_PASSWORD = ''
 MYSQL_DB = 'assistant'
 MYSQL_TABLE = 'data_infor'
 # Proxy crawl
-ROTATING_PROXY_LIST = [
-    '111.223.75.181:8888',
-    '93.179.80.174:9080',
-    '138.197.222.35:1080',
-    '178.134.123.38:9999'
-    '138.197.204.55:1080',
-    '54.39.16.26:43570',
-    '54.37.129.12:2556',
-    '14.63.76.243:1080',
-    '174.70.241.14:24392'
-]
-# DOWNLOADER_MIDDLEWARES = {
-#
-#     'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-#     'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
-# }
+# Retry many times since proxies often fail
+RETRY_TIMES = 10
+# Retry on most error codes since proxies fail for different reasons
+RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
+PROXY_LIST = 'C:\\Users\\Ho Duc Viet\\Desktop\\amazonCrawl\\amazonCrawl\\list.txt'
+
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+}
 
 DOWNLOAD_DELAY = 5
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-
+USER_AGENTS = [
+    ('Mozilla/5.0 (X11; Linux x86_64) '
+     'AppleWebKit/537.36 (KHTML, like Gecko) '
+     'Chrome/57.0.2987.110 '
+     'Safari/537.36'),  # chrome
+    ('Mozilla/5.0 (X11; Linux x86_64) '
+     'AppleWebKit/537.36 (KHTML, like Gecko) '
+     'Chrome/61.0.3163.79 '
+     'Safari/537.36'),  # chrome
+    ('Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) '
+     'Gecko/20100101 '
+     'Firefox/55.0')  # firefox
+]
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
