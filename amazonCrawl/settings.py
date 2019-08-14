@@ -28,7 +28,7 @@ MYSQL_TABLE = 'data_infor'
 RETRY_TIMES = 10
 # Retry on most error codes since proxies fail for different reasons
 RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
-PROXY_LIST = 'C:\\Users\\Ho Duc Viet\\Desktop\\amazonCrawl\\amazonCrawl\\list.txt'
+PROXY_LIST = 'list.txt'
 
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
